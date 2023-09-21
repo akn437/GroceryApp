@@ -1,4 +1,5 @@
-﻿using JwtAuthentication.Server.Models;
+﻿using GroceryApp.Models;
+using JwtAuthentication.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
