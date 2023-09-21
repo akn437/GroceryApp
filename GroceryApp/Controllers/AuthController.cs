@@ -2,6 +2,7 @@
 using JwtAuthentication.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -12,6 +13,13 @@ namespace JwtAuthentication.Server.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly GroceryAppContext _dbContext;
+
+        public AuthController(GroceryAppContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel user)
         {
@@ -20,15 +28,17 @@ namespace JwtAuthentication.Server.Controllers
                 return BadRequest("Invalid client request");
             }
 
-            if (user.UserName == "johndoe" && user.Password == "def@123")
+            var dbUser = _dbContext.Users.SingleOrDefault(u => u.EmailId == user.EmailId && u.Password == user.Password);
+
+            if (dbUser!=null )
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
                 var claims = new List<Claim> 
                 { 
-                    new Claim(ClaimTypes.Name, user.UserName), 
-                    new Claim(ClaimTypes.Role, "Manager") 
+                    new Claim(ClaimTypes.Name, user.EmailId), 
+                    new Claim(ClaimTypes.Role, "User") 
                 };
 
                 var tokeOptions = new JwtSecurityToken(
@@ -48,3 +58,4 @@ namespace JwtAuthentication.Server.Controllers
         }
     }
 }
+
