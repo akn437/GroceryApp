@@ -80,7 +80,7 @@ namespace JwtAuthentication.Server.Controllers
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
 
-                return Ok(new AuthenticatedResponse { Token = tokenString });
+                return Ok(new AuthenticatedResponse { Token = tokenString, UserName=dbUser.FirstName });
 
 
             }
