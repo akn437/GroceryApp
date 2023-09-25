@@ -74,7 +74,7 @@ namespace JwtAuthentication.Server.Controllers
                     issuer: "http://localhost:5001",
                     audience: "http://localhost:5001",
                     claims: claims,
-                    expires: DateTime.Now.AddMinutes(5),
+                    expires: DateTime.Now.AddMinutes(30),
                     signingCredentials: signinCredentials
                 );
 
