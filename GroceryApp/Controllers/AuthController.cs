@@ -74,13 +74,13 @@ namespace JwtAuthentication.Server.Controllers
                     issuer: "http://localhost:5001",
                     audience: "http://localhost:5001",
                     claims: claims,
-                    expires: DateTime.Now.AddMinutes(5),
+                    expires: DateTime.Now.AddMinutes(30),
                     signingCredentials: signinCredentials
                 );
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
 
-                return Ok(new AuthenticatedResponse { Token = tokenString, UserName=dbUser.FirstName });
+                return Ok(new AuthenticatedResponse { Token = tokenString, UserName=dbUser.FirstName, EmailId=dbUser.EmailId, Phone=dbUser.MobileNo });
 
 
             }
