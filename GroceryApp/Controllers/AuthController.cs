@@ -38,7 +38,7 @@ namespace JwtAuthentication.Server.Controllers
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var claims= new List<Claim>();
-                if (dbUser.EmailId== "admin@admin.com")
+                if (dbUser.EmailId == "admin@admin.com")
                 {
                     claims = new List<Claim>
                     {
