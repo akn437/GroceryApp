@@ -22,7 +22,7 @@ public partial class GroceryAppContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-      => optionsBuilder.UseSqlServer("server=INL682;database=GroceryApp;trusted_connection=true; TrustServerCertificate=true");
+      => optionsBuilder.UseSqlServer("server=INL664;database=GroceryApp;trusted_connection=true; TrustServerCertificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
