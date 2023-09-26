@@ -31,44 +31,30 @@ namespace JwtAuthentication.Server.Controllers
                 return BadRequest("Invalid client request");
             }
 
-
-            if (user.EmailId=="admin@admin.com"&& user.Password=="admin@123")
-            {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.EmailId),
-                    new Claim(ClaimTypes.Role, "Admin")
-                };
-
-                var tokeOptions = new JwtSecurityToken(
-                    issuer: "http://localhost:5001",
-                    audience: "http://localhost:5001",
-                    claims: claims,
-                    expires: DateTime.Now.AddMinutes(5),
-                    signingCredentials: signinCredentials
-                );
-
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-
-                return Ok(new AuthenticatedResponse { Token = tokenString });
-            }
-
-
             var dbUser = _dbContext.Users.SingleOrDefault(u => u.EmailId == user.EmailId && u.Password == user.Password);
 
             if (dbUser!=null )
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-
-                var claims = new List<Claim> 
-                { 
-                    new Claim(ClaimTypes.Name, user.EmailId), 
-                    new Claim(ClaimTypes.Role, "User") 
-                };
+                var claims= new List<Claim>();
+                if (dbUser.EmailId== "admin@admin.com")
+                {
+                    claims = new List<Claim>
+                    {
+                      new Claim(ClaimTypes.Name, user.EmailId),
+                      new Claim(ClaimTypes.Role, "Admin")
+                    };
+                }
+                else
+                {
+                    claims = new List<Claim>
+                    {
+                      new Claim(ClaimTypes.Name, user.EmailId),
+                      new Claim(ClaimTypes.Role, "User")
+                    };
+                }
+                
 
                 var tokeOptions = new JwtSecurityToken(
                     issuer: "http://localhost:5001",
