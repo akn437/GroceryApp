@@ -61,7 +61,7 @@ namespace GroceryApp.Controllers
             {
                 return BadRequest();
             }
-
+            product.ModifiedDate = DateTime.Now;
             _context.Entry(product).State = EntityState.Modified;
 
             try
@@ -92,6 +92,8 @@ namespace GroceryApp.Controllers
             {
                 return Problem("Entity set 'GroceryAppContext.Products'  is null.");
             }
+            product.CreatedDate = DateTime.Now;
+            product.ModifiedDate = DateTime.Now;
             Grocery.AddProducts(_context, product);
 
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);
