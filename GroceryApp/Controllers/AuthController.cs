@@ -82,10 +82,17 @@ namespace JwtAuthentication.Server.Controllers
             {
                 return BadRequest();
             }
-            _dbContext.Users.Add(user);
-            _dbContext.SaveChanges();
-
-            return Ok();
+            try
+            {
+                _dbContext.Users.Add(user);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e);
+            }
+            
         }
     }
 

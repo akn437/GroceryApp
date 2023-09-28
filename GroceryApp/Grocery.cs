@@ -19,25 +19,30 @@ namespace GroceryApp
 
         public static void AddProducts(GroceryAppContext db,Product product)
         {
-            db.Products.Add(product);
-            db.SaveChanges();
+            try
+            {
+                db.Products.Add(product);
+                db.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
-        public static string UserLogin(GroceryAppContext db,string username, string password)
-        {
-            User? user = db.Users.SingleOrDefault(p => p.EmailId == username);
-            if (user != null)
-            {
-                if (password == user.Password)
-                    return "Login Success";
-            }
-            return "Login Failed";
-        }
+        
 
         public static void AddCategory(GroceryAppContext db, Category category)
         {
-            db.Categories.Add(category);
-            db.SaveChanges();
+            try
+            {
+                db.Categories.Add(category);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         public static Product? GetProductById(GroceryAppContext db,int id)
@@ -48,7 +53,14 @@ namespace GroceryApp
 
         public static void EditProductById(GroceryAppContext db,int id)
         {
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         public static List<Product> SearchProduct(GroceryAppContext db,int category_id)
