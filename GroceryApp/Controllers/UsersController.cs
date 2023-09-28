@@ -120,20 +120,5 @@ namespace GroceryApp.Controllers
             return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        [HttpGet("{username}/{password}")]
-        public IActionResult Login(string username, string password)
-        {
-            if (username == null || password == null)
-            {
-                return BadRequest("Bad Request.\nProvide username and password.");
-            }
-
-            string result = Grocery.UserLogin(_context,username, password);
-            if (result == "Login Failed")
-            {
-                return Unauthorized(" Invalid Credentails ");
-            }
-            return Ok(result);
-        }
     }
 }
