@@ -71,7 +71,7 @@ namespace GroceryApp
 
         public static List<Product> SearchProductByNameAndPrice(GroceryAppContext db, string product_name,decimal price)
         {
-            List<Product> product = db.Products.Where(p => (p.ProductName == product_name && p.UnitPrice == price)).ToList();
+            List<Product> product = db.Products.Where(p => (p.ProductName == product_name && p.UnitPrice <= price)).ToList();
             return product;
         }
 
